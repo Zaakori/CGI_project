@@ -1,4 +1,4 @@
-package com.example.demo.project.api;
+package com.example.demo.project.service;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
@@ -25,11 +25,8 @@ public class RestService {
         String lon = "&lng=" + longitude;
         String date = "&date=" + theDate;
 
-        // use this GitHub project to get the right timezone? https://github.com/agap/llttz
-
         String finalUrl = baseUrl + lat + lon + date + "&formatted=0";
 
         return this.restTemplate.getForObject(finalUrl, String.class);
     }
-
 }

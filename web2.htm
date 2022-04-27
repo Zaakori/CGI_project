@@ -17,24 +17,46 @@
 </head>
 <body>
 
+<h2> Öö pikkuse kalkulaator </h2>
+
+<p> Sisestades kuupäeva ja konkreetse koha koordinaadid saab teada:
+<br />
+* mis kell päike tõuseb 
+<br />
+* mis kell päike loojub
+<br />
+* öö pikkus 
+<br /><br /><br /><br />
+Koordinaadid tuleb sisestada käsitsi kraadides nt. "laiuskraadid: 39.0447, pikkuskraadid: -98.71"
+<br />
+VÕI
+<br />
+neid võib täita automaatselt klõpsates kaardil. 
+<br /><br />
+Kuupäeva tuleb sisestada käsitsi formaadis YYYY-MM-DD nt. "2021-09-24".
+</p><br /><br />
+
+
 <form>
-<p>Please enter latitude:</p>
+<p>Palun sisesta laiuskraadid: (nt. 39.0447)</p>
 <input name="latitude" id="lat" type="text" />
 <br />
 
-<p>Please enter longitude:</p>
+<p>Palun sisesta pikkuskraadid: (nt. -98.71)</p>
 <input name="longitude" id="long" type="text" />
 <br />
 
-<p>Please enter date:</p>
+<p>Palun sisesta kuupäev: (nt. 2021-09-24)</p>
 <input name="date" type="text" />
 <br />
-<button type="submit">Submit</button>
+<button type="submit">SAADA PÄRING</button>
 </form>
 <br ->
 
-
-<p id="demo">-- Your answer will display here --</p>
+<p> (päring võib võtta paar sekundit) </p>
+<p id="demo">-- Sinu vastus ilmub siia --</p>
+<p> P.S: Kaart on vaid automaatseks koordinaatide täitmiseks, käsitsi koordinaatide sisestamisel 
+kaadil funktsioon puudub. </p>
 
 <div id="map"></div>
 
