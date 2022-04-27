@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+<style>
+#map { height: 600px; width: 900px;}
+</style>
+
+ <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+   integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+   crossorigin=""/>
+
+ <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+   integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+   crossorigin=""></script>
+
 </head>
 <body>
 
@@ -22,6 +35,22 @@
 
 
 <p id="demo">-- Your answer will display here --</p>
+
+<div id="map"></div>
+
+<script>
+var map = L.map('map').setView([51.505, -0.09], 2);
+
+L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox/streets-v11',
+    tileSize: 512,
+    zoomOffset: -1,
+    accessToken: 'pk.eyJ1IjoiYWRlbGp1c2hrYSIsImEiOiJjbDJoaGVmeDQwZHRmM2NxaDJmanJndnNuIn0.2d8rLVPNJ-YlqvJNpk0KDg'
+}).addTo(map);
+
+</script>
 
 <script>
 function handleSubmit(event) {
