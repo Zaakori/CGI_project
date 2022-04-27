@@ -19,11 +19,11 @@
 
 <form>
 <p>Please enter latitude:</p>
-<input name="latitude" type="text" />
+<input name="latitude" id="lat" type="text" />
 <br />
 
 <p>Please enter longitude:</p>
-<input name="longitude" type="text" />
+<input name="longitude" id="long" type="text" />
 <br />
 
 <p>Please enter date:</p>
@@ -50,6 +50,28 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     accessToken: 'pk.eyJ1IjoiYWRlbGp1c2hrYSIsImEiOiJjbDJoaGVmeDQwZHRmM2NxaDJmanJndnNuIn0.2d8rLVPNJ-YlqvJNpk0KDg'
 }).addTo(map);
 
+var marker;
+
+function onMapClick(e) {
+
+	if(marker != null){
+	map.removeLayer(marker);
+	}
+
+	marker = L.marker(e.latlng).addTo(map);
+
+	var rawLatLng = e.latlng.toString();
+	var trimmedLatLng = rawLatLng.substring(7, rawLatLng.length - 1);
+
+	const coordinates = trimmedLatLng.split(', ');
+
+document.getElementById('lat').value = coordinates[0];
+document.getElementById('long').value = coordinates[1];
+
+}
+
+map.on('click', onMapClick);
+
 </script>
 
 <script>
@@ -59,8 +81,6 @@ function handleSubmit(event) {
     const data = new FormData(event.target);
 
     const value = Object.fromEntries(data.entries());
-
-    console.log({ value });
 
 fetch('http://localhost:8080', {
   method: 'POST',
