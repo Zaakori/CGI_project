@@ -17,6 +17,7 @@ public class RestService {
 
     public String getPostsPlainJSON(float latitude, float longitude, String theDate) {
 
+        // used API is https://sunrise-sunset.org/api, on the website is said ATTRIBUTION IS REQUIRED, so check that out
         // example url https://api.sunrise-sunset.org/json?lat=36.7201600&lng=-4.4203400&date=2022-04-15
 
         String baseUrl = "https://api.sunrise-sunset.org/json?";
@@ -24,7 +25,9 @@ public class RestService {
         String lon = "&lng=" + longitude;
         String date = "&date=" + theDate;
 
-        String finalUrl = baseUrl + lat + lon + date;
+        // use this GitHub project to get the right timezone? https://github.com/agap/llttz
+
+        String finalUrl = baseUrl + lat + lon + date + "&formatted=0";
 
         return this.restTemplate.getForObject(finalUrl, String.class);
     }
