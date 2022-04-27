@@ -23,13 +23,22 @@ public class Controller {
     private RestService service = new RestService(new RestTemplateBuilder());
 
     @RequestMapping( value = "", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE )
-    public String doing(@RequestBody String request) throws ParseException {
+    public ResponseEntity doing(@RequestBody String request) throws ParseException {
 
-        String[] requestArray = request.split(" ");
+        System.out.println("RAW REQUEST: " + request);
 
-        String trimmedLat = requestArray[2].substring(1, requestArray[2].length() - 4);
-        String trimmedLng = requestArray[4].substring(1, requestArray[4].length() - 4);
-        String trimmedDate = requestArray[6].substring(1, requestArray[6].length() - 4);
+        // this splitting is based on the form of JSON of the request
+        String[] requestArray = request.split(",");
+
+        String trimmedLat = requestArray[0].substring(13, requestArray[0].length() - 1);
+        String trimmedLng = requestArray[1].substring(13, requestArray[1].length() - 1);
+        String trimmedDate = requestArray[2].substring(8, requestArray[2].length() - 2);
+
+        System.out.println("lat: " + trimmedLat);
+        System.out.println("long: " + trimmedLng);
+        System.out.println("date: " + trimmedDate);
+
+
 
         float latitude = Float.parseFloat(trimmedLat);
         float longitude = Float.parseFloat(trimmedLng);
@@ -48,7 +57,7 @@ public class Controller {
 
         String nightLength = calculateNightLength(sunrise, sunset);
 
-        return "Your answer (in GMT time): sunrise " + sunrise + ", sunset " + sunset + ". Length of the night is " + nightLength + ".";
+        return new ResponseEntity("Your answer (in GMT time): sunrise " + sunrise + ", sunset " + sunset + ". Length of the night is " + nightLength + ".", HttpStatus.OK);
     }
 
     // just for checking JavaScript
@@ -77,16 +86,12 @@ public class Controller {
         Date timeOneTwo = format.parse(midnightOne);
         nightLengthInMillis = timeOneTwo.getTime() - timeOneOne.getTime();
 
-        System.out.println("TILL MIDNIGHT: " + nightLengthInMillis);
-
         // midnight until sunrise
 
         String midnightTwo = "00:00:00";
         Date timeTwoOne = format.parse(midnightTwo);
         Date timeTwoTwo = format.parse(sunrise);
         nightLengthInMillis += timeTwoTwo.getTime() - timeTwoOne.getTime();
-
-        System.out.println("TILL SUNRISE: " + nightLengthInMillis);
 
         int seconds = (int) (nightLengthInMillis / 1000) % 60 ;
         int minutes = (int) ((nightLengthInMillis / (1000*60)) % 60);
