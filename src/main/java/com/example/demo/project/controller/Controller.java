@@ -18,7 +18,7 @@ public class Controller {
     private final Utility utility = new Utility();
 
     @RequestMapping( method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE )
-    public ResponseEntity<String> provideToClient(@RequestBody String request) throws ParseException {
+    public ResponseEntity<String> provideNightLength(@RequestBody String request) throws ParseException {
 
         String[] requestArray = request.split(",");
 

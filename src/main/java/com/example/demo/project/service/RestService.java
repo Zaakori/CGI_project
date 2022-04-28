@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 
- // https://attacomsian.com/blog/http-requests-resttemplate-spring-boot
+ // this class was mostly taken from https://attacomsian.com/blog/http-requests-resttemplate-spring-boot
 @Service
 public class RestService {
 
@@ -17,8 +17,7 @@ public class RestService {
 
     public String getPostsPlainJSON(float latitude, float longitude, String theDate) {
 
-        // used API is https://sunrise-sunset.org/api, on the website is said ATTRIBUTION IS REQUIRED, so check that out
-        // example url https://api.sunrise-sunset.org/json?lat=36.7201600&lng=-4.4203400&date=2022-04-15
+        // used API is https://sunrise-sunset.org/api
 
         String baseUrl = "https://api.sunrise-sunset.org/json?";
         String lat = "lat=" + latitude;

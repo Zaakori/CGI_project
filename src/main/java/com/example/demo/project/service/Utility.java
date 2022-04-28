@@ -27,20 +27,18 @@ public class Utility {
         SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
         long nightLengthInMillis;
 
-        // sunset until midnight
-
+        // this section was taken from https://stackoverflow.com/questions/4927856/how-can-i-calculate-a-time-difference-in-java
         String midnightOne = "24:00:00";
         Date sunsetDateObj = format.parse(sunset);
         Date midnightOneDateObj = format.parse(midnightOne);
         nightLengthInMillis = midnightOneDateObj.getTime() - sunsetDateObj.getTime();
-
-        // midnight until sunrise
 
         String midnightTwo = "00:00:00";
         Date midnightTwoDateObj = format.parse(midnightTwo);
         Date sunriseDateObj = format.parse(sunrise);
         nightLengthInMillis += sunriseDateObj.getTime() - midnightTwoDateObj.getTime();
 
+        // this section was taken from https://stackoverflow.com/questions/625433/how-to-convert-milliseconds-to-x-mins-x-seconds-in-java
         int seconds = (int) (nightLengthInMillis / 1000) % 60 ;
         int minutes = (int) ((nightLengthInMillis / (1000*60)) % 60);
         int hours   = (int) ((nightLengthInMillis / (1000*60*60)) % 24);
