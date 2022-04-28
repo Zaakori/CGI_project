@@ -45,6 +45,7 @@ Kuupäeva tuleb sisestada käsitsi formaadis YYYY-MM-DD nt. "2021-09-24".
 <p>Palun sisesta pikkuskraadid: (nt. -98.71)</p>
 <input name="longitude" id="long" type="text" />
 <br />
+<button onClick="addMarker()">KUVA KOHT KAARDIL</button>
 
 <p>Palun sisesta kuupäev: (nt. 2021-09-24)</p>
 <input name="date" type="text" />
@@ -93,6 +94,20 @@ document.getElementById('long').value = coordinates[1];
 }
 
 map.on('click', onMapClick);
+
+
+function addMarker(){
+
+	if(marker != null){
+	map.removeLayer(marker);
+	}
+
+var inputLat = document.getElementById('lat').value;
+var inputLng = document.getElementById('long').value;
+
+ marker = L.marker([inputLat, inputLng]).addTo(map);
+
+}
 
 </script>
 
