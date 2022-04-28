@@ -3,7 +3,52 @@
 <head>
 
 <style>
-#map { height: 600px; width: 900px;}
+
+body { 
+	font-family: Verdana;
+	background-color: #E1F9FF;
+}
+
+button {
+	margin: 5px;
+	padding: 7px;
+	border-radius: 8px;
+	background-color: #9AEAFF;
+	font-weight: bold;
+}
+
+#header {text-align: center;}
+
+#juhend { font-weight: bold;}
+#expl { font-style: italic;
+	font-size: 14px;
+	color: #7A7A7A;
+}
+
+#cor { height: 350px; width: 600px;}
+#voi { height: 200px; width: 100px;}
+#map { height: 350px; width: 600px;}
+
+#answer { text-align: center;}	
+#paring { font-style: italic;
+	  font-size: 14px;
+	  color: #7A7A7A;}
+#demo { font-weight: bold;
+	color: #0EB322;}
+
+
+.parent {
+  margin: 1rem;
+  padding: 2rem 2rem;
+  text-align: center;
+}
+.child {
+  display: inline-block;
+  padding: 1rem 1rem;
+  vertical-align: middle;
+}
+
+
 </style>
 
  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
@@ -17,6 +62,8 @@
 </head>
 <body>
 
+<div id="header">
+<div id="intro">
 <h2> Öö pikkuse kalkulaator </h2>
 
 <p> Sisestades kuupäeva ja konkreetse koha koordinaadid saab teada:
@@ -25,19 +72,30 @@
 <br />
 * mis kell päike loojub
 <br />
-* öö pikkus 
-<br /><br /><br /><br />
+* öö pikkus      
+</div>
+
+<br />
+<div id="expl">
+<p id="juhend">Kasutusjuhend:</p>
 Koordinaadid tuleb sisestada käsitsi kraadides nt. "laiuskraadid: 39.0447, pikkuskraadid: -98.71"
-<br />
-VÕI
-<br />
+<strong> VÕI </strong>
 neid võib täita automaatselt klõpsates kaardil. 
 <br /><br />
 Kuupäeva tuleb sisestada käsitsi formaadis YYYY-MM-DD nt. "2021-09-24".
-</p><br /><br />
+</div></div>
+</p>
+
+<br />
+<div id="answer">
+<p id="paring"> (päring võib võtta paar sekundit) </p>
+<p id="demo">-- Sinu vastus ilmub siia --</p>
+</div>
 
 
+<div class='parent'>
 <form>
+<div id="cor" class='child'>
 <p>Palun sisesta laiuskraadid: (nt. 39.0447)</p>
 <input name="latitude" id="lat" type="text" />
 <br />
@@ -45,24 +103,26 @@ Kuupäeva tuleb sisestada käsitsi formaadis YYYY-MM-DD nt. "2021-09-24".
 <p>Palun sisesta pikkuskraadid: (nt. -98.71)</p>
 <input name="longitude" id="long" type="text" />
 <br />
-<button onClick="addMarker()">KUVA KOHT KAARDIL</button>
+<button type="button" onClick="addMarker()">KUVA KOHT KAARDIL</button>
+</div>
+
+<div id="voi" class='child'>
+<p>           VÕI            </p>
+</div>
+
+<div id="map" class='child'>
+</div>
+
 
 <p>Palun sisesta kuupäev: (nt. 2021-09-24)</p>
-<input name="date" type="text" />
+<input name="date" id="date" type="text" />
 <br />
-<button type="submit">SAADA PÄRING</button>
+<button type="submit" onClick="handleSubmit()">SAADA PÄRING</button>
 </form>
-<br ->
-
-<p> (päring võib võtta paar sekundit) </p>
-<p id="demo">-- Sinu vastus ilmub siia --</p>
-<p> P.S: Kaart on vaid automaatseks koordinaatide täitmiseks, käsitsi koordinaatide sisestamisel 
-kaadil funktsioon puudub. </p>
-
-<div id="map"></div>
+</div>
 
 <script>
-var map = L.map('map').setView([51.505, -0.09], 2);
+var map = L.map('map').setView([51.505, -0.09], 1.5);
 
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -112,12 +172,13 @@ var inputLng = document.getElementById('long').value;
 </script>
 
 <script>
-function handleSubmit(event) {
+ function handleSubmit(event) {
+	
     event.preventDefault();
 
     const data = new FormData(event.target);
 
-    const value = Object.fromEntries(data.entries());
+    const value = Object.fromEntries(data.entries()); 
 
 fetch('http://localhost:8080', {
   method: 'POST',
@@ -129,7 +190,7 @@ fetch('http://localhost:8080', {
 .then((response) => response.text())
 .then(data => document.getElementById("demo").innerHTML =JSON.stringify(data));
 
-  }
+  } 
 
   const form = document.querySelector('form');
   form.addEventListener('submit', handleSubmit);
